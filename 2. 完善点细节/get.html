@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+<script src="http://libs.baidu.com/jquery/2.0.0/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+  var click_times = 1;
+  $("#btn").click(function(){
+    alert("page num is:"+ click_times);
+    // 修改这里的地址
+    $.get("http://localhost:8000/web/movies/?page="+click_times,function(data,status){
+      data.forEach(addTr);
+    }).fail(function(){
+      alert("page over than max_pages.");
+    });
+    click_times += 1;
+  });
+  
+  function addTr(in_data, index) {
+    var data = in_data.fields;
+    $("#tae tr:last").after("<tr><td>" + data.name + "</td><td><a href=" + data.movie_url + ">click to view</a></td><td>" + data.up_time + "</td></tr>");
+  };
+});
+</script>
+</head>
+<body>
+
+<br>
+<button id="btn">click me.</button>
+<br><br>
+
+<table id="tae" border="1" cellspacing="0" cellpadding="0" width="400">
+  <tr>
+    <th>
+      name
+    </th>
+    <th>
+      movie_url
+    </th>
+    <th>
+      time
+    </th>
+  </tr>
+</table>
+
+</body>
+</html>
+
+
